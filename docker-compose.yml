@@ -19,14 +19,14 @@ services:
     restart: always
 
   mainapp:
-    image: snehcreate/expensetracker_v3
+    build: .
     container_name: Expensetracker
     environment:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/expenses_tracker?allowPublicKeyRetrieval=true&useSSL=false"
       SPRING_DATASOURCE_PASSWORD: Test@123
     ports:
-      - "8080:8080"
+      - "8082:8080"
     networks:
       - appbridge
     depends_on:
