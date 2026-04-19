@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -31,3 +32,10 @@ build/
 
 ### VS Code ###
 .vscode/
+=======
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+.terraform.lock.hcl
+>>>>>>> 4d78e16 (Initial Terraform project)
