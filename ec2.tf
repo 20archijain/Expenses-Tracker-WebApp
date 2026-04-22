@@ -12,4 +12,8 @@ module "ec2_instance" {
     Terraform   = "true"
     Environment = "dev"
   }
+
+}
+provider "aws" {
+  region = "ap-south-1"
 }
