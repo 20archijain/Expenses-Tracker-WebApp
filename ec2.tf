@@ -17,3 +17,6 @@ module "ec2_instance" {
 provider "aws" {
   region = "ap-south-1"
 }
+output "public_ip" {
+  value = module.ec2_instance.public_ip
+}
