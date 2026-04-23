@@ -19,7 +19,8 @@ services:
     restart: always
 
   mainapp:
-    build: .
+    build: 20archijain/expense-tracker-app:latest
+
     container_name: Expensetracker
     environment:
       SPRING_DATASOURCE_USERNAME: root
