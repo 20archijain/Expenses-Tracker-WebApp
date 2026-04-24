@@ -19,7 +19,7 @@ services:
     restart: always
 
   mainapp:
-    build: 20archijain/expense-tracker-app:latest
+    image: 20archijain/expense-tracker-app:latest
 
     container_name: Expensetracker
     environment:
