@@ -50,10 +50,11 @@ module "ec2_instance" {
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
   user_data = <<-EOF
   #!/bin/bash
+  set -e
   yum update -y
 
   amazon-linux-extras enable docker
-  yum install -y docker
+  yum install -y docker git -y
   systemctl start docker
   systemctl enable docker
   usermod -aG docker ec2-user
@@ -63,13 +64,15 @@ module "ec2_instance" {
   sudo chmod +x /usr/local/bin/docker-compose
   docker-compose version
 
-  sudo yum install -y git
+  
   cd /home/ec2-user
-  git clone https://github.com/20archijain/Expenses-Tracker-WebApp.git
+  if [ ! -d "Expenses-Tracker-WebApp" ]; then
+    git clone https://github.com/20archijain/Expenses-Tracker-WebApp.git
+  fi
   chown -R ec2-user:ec2-user Expenses-Tracker-WebApp
   cd Expenses-Tracker-WebApp/
   docker build -t expense-tracker .
-  sudo -u ec2-user docker-compose up -d
+  sudo -u ec2-user docker-compose up -d --build
 
 
   
