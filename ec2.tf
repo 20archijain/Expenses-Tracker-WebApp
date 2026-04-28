@@ -65,15 +65,7 @@ module "ec2_instance" {
   docker-compose version
 
   
-  cd /home/ec2-user
-  if [ ! -d "Expenses-Tracker-WebApp" ]; then
-    git clone https://github.com/20archijain/Expenses-Tracker-WebApp.git
-  fi
-  chown -R ec2-user:ec2-user Expenses-Tracker-WebApp
-  cd Expenses-Tracker-WebApp/
-  docker build -t expense-tracker .
-  sudo -u ec2-user docker-compose up -d --build
-
+  
 
   
   EOF
