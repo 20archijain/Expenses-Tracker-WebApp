@@ -39,16 +39,41 @@ resource "aws_security_group" "ec2_sg" {
 module "ec2_instance" {
   source  = "terraform-aws-modules/ec2-instance/aws"
 
-  name = "expense-tracker-instance"
+  name = "auto-instance"
 
-  instance_type = "t3.micro"
+  instance_type = "t3.small"
   key_name      = "project"
   monitoring    = true
 
   subnet_id = "subnet-026217194928dec19"
 
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
+  user_data = <<-EOF
+  #!/bin/bash
+  yum update -y
 
+  amazon-linux-extras enable docker
+  yum install -y docker
+  systemctl start docker
+  systemctl enable docker
+  usermod -aG docker ec2-user
+  sudo curl -SL https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-linux-x86_64 \
+  -o /usr/local/bin/docker-compose
+
+  sudo chmod +x /usr/local/bin/docker-compose
+  docker-compose version
+
+  sudo yum install -y git
+  cd /home/ec2-user
+  git clone https://github.com/20archijain/Expenses-Tracker-WebApp.git
+  chown -R ec2-user:ec2-user Expenses-Tracker-WebApp
+  cd Expenses-Tracker-WebApp/
+  docker build -t expense-tracker .
+  sudo -u ec2-user docker-compose up -d
+
+
+  
+  EOF
   tags = {
     Terraform   = "true"
     Environment = "dev"
