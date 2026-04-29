@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'mainapp'
+    static_configs:
+      - targets: ['mainapp:8080']
+
